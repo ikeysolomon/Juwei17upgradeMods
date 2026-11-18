@@ -53,15 +53,15 @@ The last verified workspace notes record `3592.222` steps per degree for both ax
 
 ## 400-step motors
 
-The upgrade uses Moons Industries NEMA17 motors rated at 400 full steps per revolution (0.9 degrees per full step): **MS17HA2P4150-M on RA** and **MS17HA2P4150 on DEC**. At 16 microsteps, the nominal motor-side command count is 6400 microsteps per motor revolution. The mount-axis scale also depends on the complete reduction ratio:
+The upgrade uses Moons Industries NEMA17 motors rated at 400 full steps per revolution (0.9 degrees per full step): **MS17HA2P4150-M on RA** and **MS17HA2P4150 on DEC**. At 16 microsteps, the driver receives 6400 microstep commands per motor revolution; this is the motor-side count, not the mount-axis steps-per-degree value. The final axis scale also includes the intervening gear reduction and the harmonic-drive reduction:
 
 ```text
-steps per degree = full steps per revolution * microsteps * total reduction / 360
+axis steps per degree = motor full steps per revolution * microsteps * gear reduction * harmonic-drive reduction / 360
 ```
 
-The source configuration sets both axes to 16 microsteps, 500 mA hold current, and 1200 mA run current. Confirm the driver's ratings, motor data, wiring, and actual reduction before relying on these values. Start unloaded at low speed and check direction and measured travel.
+The 10.28x `Config.h` sets `AXIS1_STEPS_PER_DEGREE` and `AXIS2_STEPS_PER_DEGREE` to **7184.222**. That is the configured mount-axis scale for this setup, incorporating the full drive train rather than only the motor's 6400 microsteps per revolution. The source also sets both axes to 16 microsteps, 500 mA hold current, and 1200 mA run current. Runtime FRAM values can override source defaults, so read back the active settings before operation. Start unloaded at low speed and check direction and measured travel.
 
-## Removable 12 V RA brake
+## Shorter height profile 12 V RA brake
 
 A square 42 mm, 12 V electromagnetic spring brake from [AliExpress](https://www.aliexpress.com/item/1005009190233217.html?spm=a2g0o.order_list.order_list_main.246.4f391802YLqfFH) has been used on the RA axis. This brake style has allowed the RA motor to be installed and removed without fully disassembling the mount. The original RA brake style obstructed removal from the motor cavity and required a full mount strip.
 
