@@ -86,12 +86,38 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\build-esp32.ps
 
 The helper builds the `firmware/OnStepX` sketch for the ESP32 `huge_app` partition layout. It does not upload firmware or write FRAM.
 
+## Flashing the JUWEI17 ESP32
+
+1. Connect the JUWEI17 board to the computer with a data-capable USB cable and identify its serial port in Device Manager.
+2. Power off the board before changing the DIP switches. Set the switch block to the ESP32 flashing position shown below. Only use this switch arrangement when the board and switch labels match the photo.
+
+	![JUWEI17 DIP-switch setting for ESP32 flashing](assets/flashing-esp32-dipswitch.jpg)
+
+3. Build the firmware as described above. Then upload the generated image, replacing `COMx` with the port identified on your computer:
+
+	```powershell
+	$cli = "$env:LOCALAPPDATA\Programs\Arduino IDE\resources\app\lib\backend\resources\arduino-cli.exe"
+	& $cli upload --config-dir "$env:LOCALAPPDATA\Arduino15" --fqbn "esp32:esp32:esp32:PartitionScheme=huge_app,FlashFreq=80,UploadSpeed=115200" --port "COMx" --input-dir ".\build\esp32"
+	```
+
+4. Wait for the upload to finish successfully. Power off the board, return the DIP switches to the normal run position shown below, then power the board back on.
+
+	![JUWEI17 DIP-switch setting for normal run mode](assets/juwei17-run-mode-dipswitch.jpg)
+
+5. Connect with the mount-control software and query the firmware version (`:GVN#`). Confirm the mount responds before attempting motion. A successful upload alone does not confirm the application booted, and it does not initialize FRAM; set and verify the FRAM values separately.
+
+The following photos are possible ESP-12F flashing and USB-adapter references, as indicated by their original filenames. They are not instructions for the JUWEI17 ESP32 firmware target; verify the module and its pinout before using them.
+
+![Possible ESP-12F flashing reference](assets/esp12f-flashing-reference.jpg)
+
+![Possible USB-to-ESP-12F adapter reference](assets/usb-to-esp12f-reference.jpg)
+
 ## Source layout
 
 - `firmware/OnStepX/` - complete customized OnStepX source, including the JUWEI17 `Config.h`, `Extended.config.h`, and `Pins.Juwei17.h` pinmap.
 - `firmware/OnStepX/LICENSE` - upstream OnStepX GPL license.
 - `scripts/build-esp32.ps1` - compile-only ESP32 build helper.
-- `assets/` - user-supplied JUWEI17 board photos.
+- `assets/` - user-supplied JUWEI17 board and flashing photos.
 
 ## License and attribution
 
