@@ -55,7 +55,7 @@ This target matches `AXIS1_STEPS_PER_DEGREE` and `AXIS2_STEPS_PER_DEGREE` in the
 
 ## 400-step motors
 
-The upgrade uses Moons Industries NEMA17 motors rated at 400 full steps per revolution (0.9 degrees per full step): **MS17HA2P4150-M on RA** and **MS17HA2P4150 on DEC**. At 16 microsteps, the driver receives 6400 microstep commands per motor revolution; this is the motor-side count, not the mount-axis steps-per-degree value. The final axis scale also includes the intervening gear reduction and the harmonic-drive reduction:
+The upgrade uses Moons Industries NEMA17 motors rated at 400 full steps per revolution (0.9 degrees per full step): **[MS17HA2P4150-M on RA](https://www.moonsindustries.com/p/nema-17-high-precision-hybrid-stepper-motors/ms17ha2p4150-m-000004611110027530)** and **[MS17HA2P4150 on DEC](https://www.moonsindustries.com/p/nema-17-high-precision-hybrid-stepper-motors/ms17ha2p4150-000004611110015918)**. The `-M` RA model is the double-shaft version and is required for the brake-above-motor arrangement described below: the shaft extends from both ends, so the upper end can engage the brake. The DEC motor is the single-shaft version. At 16 microsteps, the driver receives 6400 microstep commands per motor revolution; this is the motor-side count, not the mount-axis steps-per-degree value. The final axis scale also includes the intervening gear reduction and the harmonic-drive reduction:
 
 ```text
 axis steps per degree = motor full steps per revolution * microsteps * gear reduction * harmonic-drive reduction / 360
@@ -99,7 +99,7 @@ The helper builds the `firmware/OnStepX` sketch for the ESP32 `huge_app` partiti
 1. Connect the JUWEI17 board to the computer with a data-capable USB cable and identify its serial port in Device Manager.
 2. Power off the board before changing the DIP switches. Set the switch block to the ESP32 flashing position shown below. Only use this switch arrangement when the board and switch labels match the photo.
 
-	With the printed `ON` label above the six-switch bank and switches numbered 1–6 left to right, the flashing photo shows **1–3 OFF and 4–6 ON**. The normal run photo shows **1–3 ON and 4–6 OFF**. Confirm the label orientation on your board before using these positions.
+	With the printed `ON` label above the six-switch bank and switches numbered 1–6 left to right, the supplied flashing photo shows **1–2 OFF and 3–6 ON**. The normal run photo shows **1–3 OFF and 4–6 ON**. These are JUWEI-17 board-specific positions, not generic ESP32 settings; confirm the switch numbering and `ON` orientation on your board before changing them. The [OnStep Group flashing report](https://onstep.groups.io/g/main/message/58893) also describes switches 3–6 ON, but its author is unsure whether switch 3 is required. Espressif's [ESP32 boot-mode guide](https://docs.espressif.com/projects/esptool/en/latest/esp32/advanced-topics/boot-mode-selection.html) explains the chip-level requirement: GPIO0 must be low during reset to enter the serial bootloader. It does not define the JUWEI-17 DIP mapping.
 
 	![JUWEI17 DIP-switch setting for ESP32 flashing](assets/flashing-esp32-dipswitch.jpg)
 
@@ -116,11 +116,11 @@ The helper builds the `firmware/OnStepX` sketch for the ESP32 `huge_app` partiti
 
 5. Connect with the mount-control software and query the firmware version (`:GVN#`). Confirm the mount responds before attempting motion. A successful upload alone does not confirm the application booted, and it does not initialize FRAM; set and verify the FRAM values separately.
 
-The following photos are possible ESP-12F flashing and USB-adapter references, as indicated by their original filenames. They are not instructions for the JUWEI17 ESP32 firmware target; verify the module and its pinout before using them.
+The next two supplied images are the separate ESP-12F/ESP8266 references: one shows its flashing setup, and the other the USB-to-ESP-12F adapter. They are not for flashing the JUWEI17 ESP32. Espressif's [ESP8266 boot-mode guide](https://docs.espressif.com/projects/esptool/en/latest/esp8266/advanced-topics/boot-mode-selection.html) says GPIO0 must be low on reset for serial programming, with GPIO2 high and GPIO15 low. The [OnStep Group report](https://onstep.groups.io/g/main/message/58893) describes a JUWEI-17 ESP8266 DIP setting but is explicitly uncertain about whether switch 4 is required; treat those switch positions as unverified unless confirmed against the board documentation.
 
-![Possible ESP-12F flashing reference](assets/esp12f-flashing-reference.jpg)
+![ESP-12F flashing setup reference](assets/esp12f-flashing-reference.jpg)
 
-![Possible USB-to-ESP-12F adapter reference](assets/usb-to-esp12f-reference.jpg)
+![USB-to-ESP-12F adapter reference](assets/usb-to-esp12f-reference.jpg)
 
 ## Source layout
 
