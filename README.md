@@ -61,6 +61,15 @@ axis steps per degree = motor full steps per revolution * microsteps * gear redu
 
 The 10.28x `Config.h` sets `AXIS1_STEPS_PER_DEGREE` and `AXIS2_STEPS_PER_DEGREE` to **7184.222**. That is the configured mount-axis scale for this setup, incorporating the full drive train rather than only the motor's 6400 microsteps per revolution. The source also sets both axes to 16 microsteps, 500 mA hold current, and 1200 mA run current. Runtime FRAM values can override source defaults, so read back the active settings before operation. Start unloaded at low speed and check direction and measured travel.
 
+## Belt adjustment
+
+The stock belts left excessive slack with the JUWEI17 motor mounting positions fixed. Replacing them with shorter Gates 2GT timing belts (2 mm pitch, 10 mm width) brought the motors inward from the ends of their mounting slots, taking up the excess slack while retaining room to adjust belt tension:
+
+- DEC: 114 mm
+- RA: 116 mm
+
+Confirm belt routing, tooth profile, and tension after installation; avoid over-tensioning the belts or loading the motor bearings.
+
 ## Shorter height profile 12 V RA brake
 
 A square 42 mm, 12 V electromagnetic spring brake from [AliExpress](https://www.aliexpress.com/item/1005009190233217.html?spm=a2g0o.order_list.order_list_main.246.4f391802YLqfFH) has been used on the RA axis. This brake style has allowed the RA motor to be installed and removed without fully disassembling the mount. The original RA brake style obstructed removal from the motor cavity and required a full mount strip.
