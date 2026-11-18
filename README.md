@@ -2,7 +2,7 @@
 
 This repository contains the complete JUWEI17-customized OnStepX 10.28x source tree, configuration, build helper, and notes for the UART, FRAM, and motor upgrades. The source is based on upstream OnStepX commit `65a751825677a03a0b12b15546780b614a206435`.
 
-> **Hardware and FRAM note:** `7184.222` steps per degree is the correct mount-axis scale for both axes. Older workspace notes record `3592.222` in FRAM; verify that the live FRAM value has been updated to `7184.222` on both axes. A firmware upload alone does not update or verify FRAM settings.
+> **Hardware and FRAM note:** `7184.222` steps per degree is the correct mount-axis scale for both axes. Initialize the runtime FRAM settings to `7184.222` for each axis and verify the readback. A firmware upload alone does not initialize FRAM settings.
 
 ## JUWEI17 board modifications
 
@@ -47,9 +47,9 @@ The TMC2209 UART interface is single-wire. The ESP32 TX/RX labels describe the c
 
 ## FRAM
 
-The firmware selects the MB85RC64 FRAM driver with `NV_MB85RC64`. Runtime axis settings stored in FRAM can override the corresponding `Config.h` defaults. Read back the live FRAM values before changing them and verify each write afterward.
+The firmware selects the MB85RC64 FRAM driver with `NV_MB85RC64`. Runtime axis settings stored in FRAM override the corresponding `Config.h` defaults. For this setup, initialize both axis settings to `7184.222` steps per degree and verify the readback before operating the mount.
 
-The correct runtime setting is `7184.222` steps per degree for both axes, matching `AXIS1_STEPS_PER_DEGREE` and `AXIS2_STEPS_PER_DEGREE` in the 10.28x source. Older workspace notes record `3592.222` in FRAM; treat that as a stale value and verify that both live FRAM entries have been updated to `7184.222`. Firmware upload and FRAM update/readback are separate operations.
+This target matches `AXIS1_STEPS_PER_DEGREE` and `AXIS2_STEPS_PER_DEGREE` in the 10.28x source. Firmware upload and FRAM initialization/readback are separate operations.
 
 ## 400-step motors
 
@@ -59,7 +59,7 @@ The upgrade uses Moons Industries NEMA17 motors rated at 400 full steps per revo
 axis steps per degree = motor full steps per revolution * microsteps * gear reduction * harmonic-drive reduction / 360
 ```
 
-The 10.28x `Config.h` sets `AXIS1_STEPS_PER_DEGREE` and `AXIS2_STEPS_PER_DEGREE` to **7184.222**. That is the configured mount-axis scale for this setup, incorporating the full drive train rather than only the motor's 6400 microsteps per revolution. The source also sets both axes to 16 microsteps, 500 mA hold current, and 1200 mA run current. Runtime FRAM values can override source defaults, so read back the active settings before operation. Start unloaded at low speed and check direction and measured travel.
+The 10.28x `Config.h` sets `AXIS1_STEPS_PER_DEGREE` and `AXIS2_STEPS_PER_DEGREE` to **7184.222**. That is the configured mount-axis scale for this setup, incorporating the full drive train rather than only the motor's 6400 microsteps per revolution. The source also sets both axes to 16 microsteps, 500 mA hold current, and 1200 mA run current. Initialize the runtime FRAM values to match the configured axis scale. Start unloaded at low speed and check direction and measured travel.
 
 ## Belt adjustment
 
