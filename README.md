@@ -63,6 +63,10 @@ axis steps per degree = motor full steps per revolution * microsteps * gear redu
 
 The 10.28x `Config.h` sets `AXIS1_STEPS_PER_DEGREE` and `AXIS2_STEPS_PER_DEGREE` to **7184.222**. That is the configured mount-axis scale for this setup, incorporating the full drive train rather than only the motor's 6400 microsteps per revolution. The source also sets both axes to 16 microsteps, 500 mA hold current, and 1200 mA run current. Initialize the runtime FRAM values to match the configured axis scale. Start unloaded at low speed and check direction and measured travel.
 
+## Observed guiding
+
+Anecdotal guiding reports put pre-modification performance at about 0.9 arcsec RMS (approximately +/-0.4 arcsec spread) and post-modification performance at about 0.6 arcsec RMS (+/-0.3 arcsec spread). These are informal observations, not a controlled before-and-after test; observing conditions and measurement details were not recorded.
+
 ## Belt adjustment
 
 The original 118 mm belts left excessive slack with the JUWEI17 motor mounting positions fixed. Replacing them with shorter Gates 2GT timing belts (2 mm pitch, 10 mm width) brought the motors inward from the ends of their mounting slots, taking up the excess slack while retaining room to adjust belt tension. These lengths were found to be optimal:
@@ -103,18 +107,22 @@ The helper builds the `firmware/OnStepX` sketch for the ESP32 `huge_app` partiti
 
 	![JUWEI17 DIP-switch setting for ESP32 flashing](assets/flashing-esp32-dipswitch.jpg)
 
-3. Build the firmware as described above. Then upload the generated image, replacing `COMx` with the port identified on your computer:
+3. Build the firmware as described above.
+
+4. With the DIP switches still in the flashing position, connect the board's 12 V supply and turn on its power switch before uploading. Keep the USB cable connected. The [OnStep Group flashing report](https://onstep.groups.io/g/main/message/58893) describes using USB and 12 V power during flashing; confirm the correct supply for your board revision.
+
+5. Upload the generated image, replacing `COMx` with the port identified on your computer:
 
 	```powershell
 	$cli = "$env:LOCALAPPDATA\Programs\Arduino IDE\resources\app\lib\backend\resources\arduino-cli.exe"
 	& $cli upload --config-dir "$env:LOCALAPPDATA\Arduino15" --fqbn "esp32:esp32:esp32:PartitionScheme=huge_app,FlashFreq=80,UploadSpeed=115200" --port "COMx" --input-dir ".\build\esp32"
 	```
 
-4. Wait for the upload to finish successfully. Power off the board, return the DIP switches to the normal run position shown below, then power the board back on.
+6. Wait for the upload to finish successfully. Power off the board, return the DIP switches to the normal run position shown below, then power the board back on.
 
 	![JUWEI17 DIP-switch setting for normal run mode](assets/juwei17-run-mode-dipswitch.jpg)
 
-5. Connect with the mount-control software and query the firmware version (`:GVN#`). Confirm the mount responds before attempting motion. A successful upload alone does not confirm the application booted, and it does not initialize FRAM; set and verify the FRAM values separately.
+7. Connect with the mount-control software and query the firmware version (`:GVN#`). Confirm the mount responds before attempting motion. A successful upload alone does not confirm the application booted, and it does not initialize FRAM; set and verify the FRAM values separately.
 
 The next two supplied images are the separate ESP-12F/ESP8266 references: one shows its flashing setup, and the other the USB-to-ESP-12F adapter. They are not for flashing the JUWEI17 ESP32. Espressif's [ESP8266 boot-mode guide](https://docs.espressif.com/projects/esptool/en/latest/esp8266/advanced-topics/boot-mode-selection.html) says GPIO0 must be low on reset for serial programming, with GPIO2 high and GPIO15 low. The [OnStep Group report](https://onstep.groups.io/g/main/message/58893) describes a JUWEI-17 ESP8266 DIP setting but is explicitly uncertain about whether switch 4 is required; treat those switch positions as unverified unless confirmed against the board documentation.
 
