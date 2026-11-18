@@ -2,7 +2,7 @@
 
 This repository contains the complete JUWEI17-customized OnStepX 10.28x source tree, configuration, build helper, and notes for the UART, FRAM, and motor upgrades. The source is based on upstream OnStepX commit `65a751825677a03a0b12b15546780b614a206435`.
 
-> **Hardware and FRAM warning:** Verify the board wiring and read the live FRAM values before operating the mount. The source defaults and last recorded FRAM motor calibration do not match. A firmware upload alone does not confirm the controller is running or that the motor scale is correct.
+> **Hardware and FRAM note:** `7184.222` steps per degree is the correct mount-axis scale for both axes. Older workspace notes record `3592.222` in FRAM; verify that the live FRAM value has been updated to `7184.222` on both axes. A firmware upload alone does not update or verify FRAM settings.
 
 ## JUWEI17 board modifications
 
@@ -49,7 +49,7 @@ The TMC2209 UART interface is single-wire. The ESP32 TX/RX labels describe the c
 
 The firmware selects the MB85RC64 FRAM driver with `NV_MB85RC64`. Runtime axis settings stored in FRAM can override the corresponding `Config.h` defaults. Read back the live FRAM values before changing them and verify each write afterward.
 
-The last verified workspace notes record `3592.222` steps per degree for both axes in FRAM. The 10.28x source currently specifies `7184.222` for both axes. **Do not assume the source value is active, or change FRAM to either value without confirming the motor and gearbox ratio.**
+The correct runtime setting is `7184.222` steps per degree for both axes, matching `AXIS1_STEPS_PER_DEGREE` and `AXIS2_STEPS_PER_DEGREE` in the 10.28x source. Older workspace notes record `3592.222` in FRAM; treat that as a stale value and verify that both live FRAM entries have been updated to `7184.222`. Firmware upload and FRAM update/readback are separate operations.
 
 ## 400-step motors
 
