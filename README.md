@@ -41,7 +41,7 @@ Both RA and DEC axes are configured for TMC2209 UART operation:
 #define AXIS2_DRIVER_UART       ON
 ```
 
-BigTreeTech (BTT) v1.3 TMC2209 driver modules have been used, fitted with custom finned heatsinks. Check heatsink clearance and driver temperature in the assembled controller, and set current limits for the actual motors and cooling conditions.
+The original stepper-driver modules were V985 TMC2209s. BigTreeTech (BTT) v1.3 TMC2209 modules have also been used, fitted with custom finned heatsinks. Check heatsink clearance and driver temperature in the assembled controller, and set current limits for the actual motors and cooling conditions.
 
 The TMC2209 UART interface is single-wire. The ESP32 TX/RX labels describe the controller-side signals; confirm how the JUWEI17 board joins them to the driver's UART pin. Maintain a common signal ground and compatible logic levels. Do not connect ESP32 GPIO to the motor-supply rail.
 
