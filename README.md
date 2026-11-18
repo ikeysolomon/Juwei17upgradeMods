@@ -53,7 +53,7 @@ The last verified workspace notes record `3592.222` steps per degree for both ax
 
 ## 400-step motors
 
-The upgrade uses Moons Industries NEMA17 motors rated at 400 full steps per revolution (0.9 degrees per full step). At 16 microsteps, the nominal motor-side command count is 6400 microsteps per motor revolution. The mount-axis scale also depends on the complete reduction ratio:
+The upgrade uses Moons Industries NEMA17 motors rated at 400 full steps per revolution (0.9 degrees per full step): **MS17HA2P4150-M on RA** and **MS17HA2P4150 on DEC**. At 16 microsteps, the nominal motor-side command count is 6400 microsteps per motor revolution. The mount-axis scale also depends on the complete reduction ratio:
 
 ```text
 steps per degree = full steps per revolution * microsteps * total reduction / 360
