@@ -1,12 +1,16 @@
 param(
-    [string]$OutputDirectory = (Join-Path $PSScriptRoot "build\esp32")
+    [string]$OutputDirectory
 )
 
 $ErrorActionPreference = "Stop"
+$repositoryRoot = Split-Path -Parent $PSScriptRoot
+if ([string]::IsNullOrWhiteSpace($OutputDirectory)) {
+    $OutputDirectory = Join-Path $repositoryRoot "build\esp32"
+}
 $cli = Join-Path $env:LOCALAPPDATA "Programs\Arduino IDE\resources\app\lib\backend\resources\arduino-cli.exe"
 $config = Join-Path $env:TEMP "arduino-cli-cfg\arduino-cli.yaml"
 $configDirectory = Join-Path $env:LOCALAPPDATA "Arduino15"
-$firmware = Join-Path $PSScriptRoot "firmware\OnStepX"
+$firmware = Join-Path $repositoryRoot "firmware\OnStepX"
 $fqbn = "esp32:esp32:esp32:PartitionScheme=huge_app,FlashFreq=80,UploadSpeed=921600"
 
 if (!(Test-Path $cli)) {
