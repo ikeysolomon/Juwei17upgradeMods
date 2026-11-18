@@ -80,10 +80,16 @@ Confirm the brake's mechanical dimensions, coil voltage, retention, and clearanc
 
 ## Build
 
-Install the ESP32 Arduino core and dependencies required by OnStepX, then run the PowerShell helper from the repository root:
+Install Arduino CLI, the `esp32:esp32` core, and dependencies required by OnStepX. The helper checks the standard Arduino IDE install location first, then searches `PATH`; pass `-CliPath` for a custom CLI location. Run it from the repository root:
 
 ```powershell
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\build-esp32.ps1
+```
+
+For a custom CLI path:
+
+```powershell
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\build-esp32.ps1 -CliPath "C:\Tools\arduino-cli.exe"
 ```
 
 The helper builds the `firmware/OnStepX` sketch for the ESP32 `huge_app` partition layout. It does not upload firmware or write FRAM.
@@ -92,6 +98,8 @@ The helper builds the `firmware/OnStepX` sketch for the ESP32 `huge_app` partiti
 
 1. Connect the JUWEI17 board to the computer with a data-capable USB cable and identify its serial port in Device Manager.
 2. Power off the board before changing the DIP switches. Set the switch block to the ESP32 flashing position shown below. Only use this switch arrangement when the board and switch labels match the photo.
+
+	With the printed `ON` label above the six-switch bank and switches numbered 1–6 left to right, the flashing photo shows **1–3 OFF and 4–6 ON**. The normal run photo shows **1–3 ON and 4–6 OFF**. Confirm the label orientation on your board before using these positions.
 
 	![JUWEI17 DIP-switch setting for ESP32 flashing](assets/flashing-esp32-dipswitch.jpg)
 
