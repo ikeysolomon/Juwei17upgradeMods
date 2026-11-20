@@ -6,7 +6,7 @@ This repository contains the complete JUWEI17-customized OnStepX 10.28x source t
 
 ## JUWEI17 board modifications
 
-The photos below document the modified controller, the driver area, and the added wiring. They are reference photos rather than pin-by-pin schematics; verify each conductor against the board revision and the source pinmap before making changes.
+The photos below document the modified PCB, the new stepper motor drivers, and the added UART and FRAM wiring. They are reference photos rather than pin-by-pin schematics; verify each conductor against the board revision and the source pinmap before making changes.
 
 ![JUWEI17 controller and driver wiring overview](assets/juwei17-board-overview.jpg)
 
