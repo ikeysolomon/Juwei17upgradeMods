@@ -41,9 +41,7 @@ Both RA and DEC axes are configured for TMC2209 UART operation:
 #define AXIS2_DRIVER_UART       ON
 ```
 
-UART lets OnStepX set the driver microsteps and run/hold current settings. It does not change the motor-supply voltage. One detail worth noting: this source uses the legacy TMC2209 driver and enables analog current scaling, so the module's Vref setting still matters. The configured mA values are not a measurement of the actual coil current.
-
-The original drivers were V985 TMC2209 modules. BigTreeTech (BTT) v1.3 modules have also been used, but their supplied heatsinks were too tall for the JUWEI17 cavity. Shorter [heatsinks](https://www.ebay.com.au/itm/184650895461) were needed. Check clearance, cooling, and the current setting for the motors you actually install.
+UART lets OnStepX set the driver microsteps and run/hold current settings. The original drivers were V985 TMC2209 modules which are not UART enabled. These were replaced with 2x BigTreeTech (BTT) v1.3 TMC2209. Their supplied heatsinks were found to be too tall for the JUWEI17 cavity. Shorter [heatsinks](https://www.ebay.com.au/itm/184650895461) were needed. Check clearance, cooling, and the current setting for the stepper motor drivers you actually install.
 
 The TMC2209 UART interface is single-wire. The ESP32 TX/RX labels describe the controller-side signals; confirm how the JUWEI17 board joins them to the driver's UART pin. Maintain a common signal ground and compatible logic levels. Do not connect ESP32 GPIO to the motor-supply rail.
 
