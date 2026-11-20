@@ -78,9 +78,9 @@ Confirm belt routing, tooth profile, and tension after installation; avoid over-
 
 ## Shorter height profile 12 V RA brake
 
-A square 42 mm, 12 V electromagnetic spring brake from [AliExpress](https://www.aliexpress.com/item/1005009190233217.html?spm=a2g0o.order_list.order_list_main.246.4f391802YLqfFH) has been used on the RA axis. This brake style has allowed the RA motor to be installed and removed without fully disassembling the mount. The original RA brake style obstructed removal from the motor cavity and required a full mount strip.
+A square 42 mm, 12 V electromagnetic spring brake from [AliExpress](https://www.aliexpress.com/item/1005009190233217.html?spm=a2g0o.order_list.order_list_main.246.4f391802YLqfFH) has been used on the RA axis. This brake style has allowed the RA motor to be installed and removed without fully disassembling the entire mount. The original RA brake style obstructed removal from the motor cavity and required a full mount strip.
 
-Confirm the brake's mechanical dimensions, coil voltage, retention, and clearance for the specific mount before fitting it. Disconnect power before servicing.
+Make sure you choose the 12V version.
 
 ## Build
 
