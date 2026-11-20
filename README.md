@@ -104,7 +104,7 @@ If an axis read still returns a bare `0` after the first restart, check for disa
 
 ## 400-step motors
 
-The motors are Moons Industries NEMA17 units with 400 full steps per revolution (0.9 degrees per step):
+The existing 200 step motors have been upgraded with higher quality 400 step motors. For this the below Moons Industries NEMA17 units with 400 full steps per revolution (0.9 degrees per step) were chosen:
 
 - **RA:** [MS17HA2P4150-M](https://www.moonsindustries.com/p/nema-17-high-precision-hybrid-stepper-motors/ms17ha2p4150-m-000004611110027530), the double-shaft version. The upper shaft engages the brake mounted above the motor.
 - **DEC:** [MS17HA2P4150](https://www.moonsindustries.com/p/nema-17-high-precision-hybrid-stepper-motors/ms17ha2p4150-000004611110015918), the single-shaft version.
