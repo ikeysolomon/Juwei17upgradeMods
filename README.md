@@ -43,7 +43,7 @@ Both RA and DEC axes are configured for TMC2209 UART operation:
 
 The impetus for the UART upgrade was to configure the motor drive from OnStepX instead of setting it only with the drivers' adjustment potentiometers. On the TMC2209, UART controls the motor coil-current limits (such as run and hold current); it does not change the board's motor-supply voltage. The configured current values are shown in the 400-step motor section below.
 
-The original stepper-driver modules were V985 TMC2209s. BigTreeTech (BTT) v1.3 TMC2209 modules have also been used, fitted with custom finned heatsinks. Check heatsink clearance and driver temperature in the assembled controller, and set current limits for the actual motors and cooling conditions.
+The original stepper-driver modules were V985 TMC2209s. BigTreeTech (BTT) v1.3 TMC2209 modules have also been used, fitted with custom finned heatsinks. Check clearance of the heatsinks it was found that the heatsinks that come with the BigTreeTech TMC2209s were too tall for the Juwei17 cavity so some shorter height [heat sinks](https://www.ebay.com.au/itm/184650895461) had to be sourced. 
 
 The TMC2209 UART interface is single-wire. The ESP32 TX/RX labels describe the controller-side signals; confirm how the JUWEI17 board joins them to the driver's UART pin. Maintain a common signal ground and compatible logic levels. Do not connect ESP32 GPIO to the motor-supply rail.
 
