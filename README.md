@@ -1,6 +1,6 @@
 # JUWEI17 OnStepX 10.28x Firmware
 
-This is the OnStepX 10.28x setup used for the JUWEI17 upgrades described below: TMC2209 UART control, FRAM, 400-step motors, shorter belts, and a lower-profile RA brake. It includes the firmware source and a Windows build/upload helper, based on upstream OnStepX commit `65a751825677a03a0b12b15546780b614a206435`.
+This is the OnStepX 10.28x setup used for the JUWEI17 upgrades described below: TMC2209 UART control, FRAM, 400-step motors, shorter belts, and a lower-profile RA brake. It includes the firmware source and a Windows build/upload helper, based on upstream OnStepX commit `65a751825677a03a0b12b15546780b614a206435`. The wiring and codebase refer to v1 of the Juwei17 PCB rather than the newer Triton Goto collaboration version of the PCB.
 
 > **Before moving the mount:** this setup uses `7184.222` steps per degree on both axes. Uploading firmware does not replace existing runtime settings. Follow the [FRAM procedure](#fram), restart the controller, and check the saved settings again before testing motion.
 
@@ -123,7 +123,7 @@ Reported guiding was roughly 0.9 arcsec RMS before the changes (about +/-0.4 arc
 
 ## Belt adjustment
 
-The original 118 mm belts were too slack for the available adjustment. Shorter Gates 2GT belts (2 mm pitch, 10 mm wide) left room to tension them without keeping the motors at the ends of their slots. The lengths that worked for this mount were:
+The original 118 mm belts were too slack for the available adjustment. Visible slack was present in the existing belts even when fully adjusted to the extent of the adjustment slots. This was a potential contributor to the backlash experienced by the existing unit. Shorter Gates 2GT belts (2 mm pitch, 10 mm wide) left room to tension them without keeping the motors at the ends of their slots. The lengths that worked for this mount were:
 
 - DEC: 114 mm
 - RA: 116 mm
