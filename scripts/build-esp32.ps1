@@ -1,6 +1,8 @@
 param(
     [string]$OutputDirectory,
-    [string]$CliPath
+    [string]$CliPath,
+    [string]$ConfigFile,
+    [string]$UploadPort
 )
 
 $ErrorActionPreference = "Stop"
@@ -25,7 +27,6 @@ if ([string]::IsNullOrWhiteSpace($CliPath)) {
     }
 }
 
-$config = Join-Path $env:TEMP "arduino-cli-cfg\arduino-cli.yaml"
 $configDirectory = Join-Path $env:LOCALAPPDATA "Arduino15"
 $firmware = Join-Path $repositoryRoot "firmware\OnStepX"
 $fqbn = "esp32:esp32:esp32:PartitionScheme=huge_app,FlashFreq=80,UploadSpeed=921600"
@@ -37,11 +38,15 @@ if (!(Test-Path $firmware)) {
     throw "OnStepX source was not found at $firmware"
 }
 
-$arguments = @("compile", "--config-dir", $configDirectory, "--fqbn", $fqbn, "--output-dir", $OutputDirectory, $firmware)
-if (Test-Path $config) {
-    $arguments = @("compile", "--config-file", $config, "--config-dir", $configDirectory, "--fqbn", $fqbn, "--output-dir", $OutputDirectory, $firmware)
+$configArguments = @("--config-dir", $configDirectory)
+if (![string]::IsNullOrWhiteSpace($ConfigFile)) {
+    if (!(Test-Path -LiteralPath $ConfigFile -PathType Leaf)) {
+        throw "Arduino CLI configuration was not found at $ConfigFile"
+    }
+    $configArguments = @("--config-file", (Resolve-Path -LiteralPath $ConfigFile).Path)
 }
 
+$arguments = @("compile") + $configArguments + @("--fqbn", $fqbn, "--output-dir", $OutputDirectory, $firmware)
 & $CliPath @arguments
 if ($LASTEXITCODE -ne 0) {
     exit $LASTEXITCODE
@@ -53,3 +58,13 @@ if (!(Test-Path $image)) {
 }
 
 Write-Output "BUILD_IMAGE=$image"
+
+if (![string]::IsNullOrWhiteSpace($UploadPort)) {
+    $uploadFqbn = "esp32:esp32:esp32:PartitionScheme=huge_app,FlashFreq=80,UploadSpeed=115200"
+    $arguments = @("upload") + $configArguments + @("--fqbn", $uploadFqbn, "--port", $UploadPort, "--input-dir", $OutputDirectory)
+    & $CliPath @arguments
+    if ($LASTEXITCODE -ne 0) {
+        exit $LASTEXITCODE
+    }
+    Write-Output "UPLOAD_PORT=$UploadPort"
+}
